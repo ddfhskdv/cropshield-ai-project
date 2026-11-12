@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./Backend
+    working_dir: /app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      - API_V1_STR=/api/v1
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:5174
+
+  farmer-portal:
+    build:
+      context: ./Frontend SIH
+    working_dir: /app
+    command: npm run dev -- --host 0.0.0.0 --port 5173
+    ports:
+      - "5173:5173"
+
+  admin-portal:
+    build:
+      context: ./Admin
+    working_dir: /app
+    command: npm run dev -- --host 0.0.0.0 --port 5174
+    ports:
+      - "5174:5174"
